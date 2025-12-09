@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Motors | Luxury Car Dealership</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        /* Video Background */
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
+        
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+        
+        /* Header & Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 5%;
+            background: rgba(0, 0, 0, 0.85);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #e63946;
+        }
+        
+        .logo span {
+            color: #fff;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 35px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #e63946;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 150px 5%;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #e63946;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            border: 2px solid #e63946;
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            color: #e63946;
+        }
+        
+        /* Content Sections */
+        .section {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 80px 5%;
+            margin: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #e63946;
+        }
+        
+        /* Cars Grid */
+        .cars-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .car-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .car-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .car-info {
+            padding: 20px;
+        }
+        
+        .car-model {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .car-price {
+            color: #e63946;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .car-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .car-features li {
+            margin-bottom: 5px;
+            color: #ddd;
+        }
+        
+        .car-features i {
+            color: #e63946;
+            margin-right: 8px;
+        }
+        
+        /* About Section */
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Contact Form */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .contact-info h3 {
+            color: #e63946;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .contact-info p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .contact-info i {
+            color: #e63946;
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #e63946;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 50px 5% 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-column h3 {
+            color: #e63946;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: white;
+            background: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: #e63946;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                padding: 20px;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 100px 5%;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cars-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <video autoplay muted loop id="video-background">
+        <source src="assest\image\vecteezy_3d-rendered-super-car-cinematic-front-view-in-dark_35355667.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+    <div class="video-overlay"></div>
+    
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo">PRIME<span>MOTORS</span></div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#inventory">Inventory</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Experience Luxury on Wheels</h1>
+        <p>Discover the finest selection of premium vehicles at Prime Motors. From sleek sports cars to powerful SUVs, we have the perfect vehicle to match your lifestyle.</p>
+        <a href="#inventory" class="cta-button">Browse Our Collection</a>
+    </section>
+    
+    <!-- Inventory Section -->
+    <section class="section" id="inventory">
+        <h2 class="section-title">Featured Vehicles</h2>
+        <div class="cars-container">
+            <!-- Car 1 -->
+            <div class="car-card">
+                <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Porsche 911" class="car-image">
+                <div class="car-info">
+                    <h3 class="car-model">Porsche 911 Turbo S</h3>
+                    <div class="car-price">$205,000</div>
+                    <ul class="car-features">
+                        <li><i class="fas fa-tachometer-alt"></i> 640 HP</li>
+                        <li><i class="fas fa-gas-pump"></i> 20 MPG City / 26 MPG Hwy</li>
+                        <li><i class="fas fa-cogs"></i> 8-Speed Automatic</li>
+                        <li><i class="fas fa-road"></i> 0-60 mph in 2.6s</li>
+                    </ul>
+                    <a href="#contact" class="cta-button" style="padding: 10px 25px; font-size: 1rem;">Inquire Now</a>
+                </div>
+            </div>
+            
+            <!-- Car 2 -->
+            <div class="car-card">
+                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Mercedes G-Class" class="car-image">
+                <div class="car-info">
+                    <h3 class="car-model">Mercedes-Benz G 63</h3>
+                    <div class="car-price">$179,000</div>
+                    <ul class="car-features">
+                        <li><i class="fas fa-tachometer-alt"></i> 577 HP</li>
+                        <li><i class="fas fa-gas-pump"></i> 13 MPG City / 17 MPG Hwy</li>
+                        <li><i class="fas fa-cogs"></i> 9-Speed Automatic</li>
+                        <li><i class="fas fa-road"></i> 0-60 mph in 4.4s</li>
+                    </ul>
+                    <a href="#contact" class="cta-button" style="padding: 10px 25px; font-size: 1rem;">Inquire Now</a>
+                </div>
+            </div>
+            
+            <!-- Car 3 -->
+            <div class="car-card">
+                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="BMW i8" class="car-image">
+                <div class="car-info">
+                    <h3 class="car-model">BMW i8 Roadster</h3>
+                    <div class="car-price">$163,000</div>
+                    <ul class="car-features">
+                        <li><i class="fas fa-tachometer-alt"></i> 369 HP (Hybrid)</li>
+                        <li><i class="fas fa-gas-pump"></i> 69 MPGe Combined</li>
+                        <li><i class="fas fa-cogs"></i> 6-Speed Automatic</li>
+                        <li><i class="fas fa-road"></i> 0-60 mph in 4.2s</li>
+                    </ul>
+                    <a href="#contact" class="cta-button" style="padding: 10px 25px; font-size: 1rem;">Inquire Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2 class="section-title">About Prime Motors</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>For over 25 years, Prime Motors has been the premier destination for luxury automotive enthusiasts. Our commitment to excellence, customer satisfaction, and an unparalleled selection of high-end vehicles has made us a trusted name in the industry.</p>
+                <p>We offer an extensive collection of new and pre-owned luxury vehicles from the world's most prestigious brands. Our knowledgeable staff is dedicated to helping you find the perfect vehicle to match your style, performance needs, and budget.</p>
+                <p>Visit our state-of-the-art showroom to experience luxury like never before. We offer comprehensive financing options, trade-in evaluations, and a complete service center to maintain your vehicle's performance.</p>
+            </div>
+            <div class="about-image">
+                <img src="assest\image\car.webp" alt="Prime Motors Showroom">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Visit Our Dealership</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Luxury Avenue, Beverly Hills, CA 90210</p>
+                <p><i class="fas fa-phone"></i> (310) 555-1234</p>
+                <p><i class="fas fa-envelope"></i> info@primemotors.com</p>
+                <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-8PM, Sat: 10AM-6PM, Sun: 11AM-5PM</p>
+                
+                <h3 style="margin-top: 30px;">Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h3>Request More Information</h3>
+                <form id="inquiryForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle">Vehicle of Interest</label>
+                        <select id="vehicle">
+                            <option value="">Select a vehicle</option>
+                            <option value="porsche">Porsche 911 Turbo S</option>
+                            <option value="mercedes">Mercedes-Benz G 63</option>
+                            <option value="bmw">BMW i8 Roadster</option>
+                            <option value="other">Other Vehicle</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="cta-button" style="width: 100%;">Submit Inquiry</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Prime Motors</h3>
+                <p>Your premier destination for luxury vehicles. Experience exceptional service and an unparalleled selection of premium automobiles.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <p><a href="#home" style="color: #ddd; text-decoration: none;">Home</a></p>
+                <p><a href="#inventory" style="color: #ddd; text-decoration: none;">Inventory</a></p>
+                <p><a href="#about" style="color: #ddd; text-decoration: none;">About Us</a></p>
+                <p><a href="#contact" style="color: #ddd; text-decoration: none;">Contact</a></p>
+            </div>
+            <div class="footer-column">
+                <h3>Brands We Carry</h3>
+                <p>Porsche</p>
+                <p>Mercedes-Benz</p>
+                <p>BMW</p>
+                <p>Audi</p>
+                <p>Lexus</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Prime Motors Luxury Dealership. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Form submission
+        const inquiryForm = document.getElementById('inquiryForm');
+        inquiryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const vehicle = document.getElementById('vehicle').value;
+            
+            // Show success message
+            alert(`Thank you ${name}! We have received your inquiry about the ${vehicle}. We will contact you at ${email} shortly.`);
+            
+            // Reset form
+            inquiryForm.reset();
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
